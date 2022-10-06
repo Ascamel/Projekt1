@@ -23,6 +23,50 @@ namespace Projekt1
         public MainWindow()
         {
             InitializeComponent();
+            
+        }
+
+        private void LineButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Line line = new()
+            {
+                X1 = 10,
+                Y1 = 10,
+
+                X2 = 200,
+                Y2 = 200,
+
+                Stroke = Brushes.Black,
+                StrokeThickness = 2
+            };
+
+            MyCanvas.Children.Add(line);
+        }
+
+        private void RectangleButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Rectangle rectangle = new()
+            {
+                Width = 200,
+                Height = 50,
+                Stroke = Brushes.Black,
+                StrokeThickness = 2
+            };
+
+            MyCanvas.Children.Add(rectangle);
+        }
+
+        private void CircleButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Ellipse ellipse = new()
+            {
+                Width = 50,
+                Height = 50,
+                Stroke = Brushes.Black,
+                StrokeThickness = 2
+            };
+
+            MyCanvas.Children.Add(ellipse);
         }
     }
 }

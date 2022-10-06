@@ -7,6 +7,48 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <TabControl>
+            <TabItem Header="Punkt 1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "20*"></ColumnDefinition>
+                        <ColumnDefinition Width = "80*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Vertical" Margin="20">
+                        <Button x:Name="LineButton" Margin="0,10" Click="LineButtonClicked">Line</Button>
+                        <Button x:Name="RectangleButton" Margin="0,10" Click="RectangleButtonClicked">Rectangle</Button>
+                        <Button x:Name="CircleButton" Margin="0,10" Click="CircleButtonClicked">Circle</Button>
+
+                    </StackPanel>
+
+                    <Canvas x:Name="MyCanvas" Grid.Column="1" Margin="10">
+                        
+                    </Canvas>
+                    
+                    
+                </Grid> 
+                      
+            </TabItem>
+            <TabItem Header="Punkt 2">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Punkt 3">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Punkt 4">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Punkt 5">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Punkt 6">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Punkt 7">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
