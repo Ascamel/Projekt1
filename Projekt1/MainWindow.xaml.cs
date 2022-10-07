@@ -68,5 +68,73 @@ namespace Projekt1
 
             MyCanvas.Children.Add(ellipse);
         }
+
+        private void Line2ButtonClicked(object sender, RoutedEventArgs e)
+        {
+            LineButton2.IsEnabled = false;
+            RectangleButton2.IsEnabled = true;
+            CircleButton2.IsEnabled = true;
+        }
+
+        private void Rectangle2ButtonClicked(object sender, RoutedEventArgs e)
+        {
+            LineButton2.IsEnabled = true;
+            RectangleButton2.IsEnabled = false;
+            CircleButton2.IsEnabled = true;
+        }
+
+        private void Circle2ButtonClicked(object sender, RoutedEventArgs e)
+        {
+            LineButton2.IsEnabled = true;
+            RectangleButton2.IsEnabled = true;
+            CircleButton2.IsEnabled = false;
+        }
+
+        private void Draw2Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!LineButton2.IsEnabled)
+            {
+                Line line = new()
+                {
+                    X1 = Convert.ToDouble(XStart.Text),
+                    Y1 = Convert.ToDouble(YStart.Text),
+
+                    X2 = Convert.ToDouble(XEnd.Text),
+                    Y2 = Convert.ToDouble(YEnd.Text),
+
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 2
+                };
+
+                MyCanvas2.Children.Add(line);
+            }
+            else if(!RectangleButton2.IsEnabled)
+            {
+
+                Rectangle rectangle = new()
+                {
+                    Width = Convert.ToDouble(WithText.Text),
+                    Height =  Convert.ToDouble(HeightText.Text),
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 2
+                };
+
+                MyCanvas2.Children.Add(rectangle);
+
+            }
+            else if(!CircleButton2.IsEnabled)
+            {
+                Ellipse ellipse = new()
+                {
+                    Width = 2 * Convert.ToDouble(RadiusText.Text),
+                    Height = 2 * Convert.ToDouble(RadiusText.Text),
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 2
+                };
+
+                MyCanvas2.Children.Add(ellipse);
+
+            }
+        }
     }
 }

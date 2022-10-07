@@ -19,7 +19,6 @@
                         <Button x:Name="LineButton" Margin="0,10" Click="LineButtonClicked">Line</Button>
                         <Button x:Name="RectangleButton" Margin="0,10" Click="RectangleButtonClicked">Rectangle</Button>
                         <Button x:Name="CircleButton" Margin="0,10" Click="CircleButtonClicked">Circle</Button>
-
                     </StackPanel>
 
                     <Canvas x:Name="MyCanvas" Grid.Column="1" Margin="10">
@@ -30,8 +29,74 @@
                 </Grid> 
                       
             </TabItem>
-            <TabItem Header="Punkt 2">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Punkt 2" HorizontalAlignment="Left" Width="52">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "20*"></ColumnDefinition>
+                        <ColumnDefinition Width = "80*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Vertical" Margin="20">
+                        <Button x:Name="LineButton2" Margin="0,10" Click="Line2ButtonClicked">Line</Button>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width ="2*"></ColumnDefinition>
+                                <ColumnDefinition Width ="5*"></ColumnDefinition>
+                                <ColumnDefinition Width ="5*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="1">Start</Label>
+                            <Label Grid.Row="0" Grid.Column="2">End</Label>
+
+                            <Label Grid.Row="1" Grid.Column="0">X</Label>
+                            <Label Grid.Row="2" Grid.Column="0">Y</Label>
+
+                            <TextBox x:Name="XStart" Grid.Row="1" Grid.Column="1"></TextBox>
+                            <TextBox x:Name="YStart" Grid.Row="2" Grid.Column="1"></TextBox>
+
+                            <TextBox x:Name="XEnd" Grid.Row="1" Grid.Column="2"></TextBox>
+                            <TextBox x:Name="YEnd" Grid.Row="2" Grid.Column="2"></TextBox>
+                        </Grid>
+
+                        
+                        
+                        <Button x:Name="RectangleButton2" Margin="0,10" Click="Rectangle2ButtonClicked">Rectangle</Button>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0">Width</Label>
+                            <Label Grid.Column="0" Grid.Row="1">Height</Label>
+
+                            <TextBox x:Name="WithText" Grid.Column="1" Grid.Row="0"></TextBox>
+                            <TextBox x:Name="HeightText" Grid.Column="1" Grid.Row="1"></TextBox>
+
+                        </Grid>
+                        <Button x:Name="CircleButton2" Margin="0,10" Click="Circle2ButtonClicked">Circle</Button>
+                        <DockPanel HorizontalAlignment="Stretch">
+                            <Label DockPanel.Dock="Left">Radius</Label>
+                            <TextBox x:Name="RadiusText" DockPanel.Dock ="Right"></TextBox>
+                        </DockPanel>
+                        <Button x:Name="DrawButton2" Margin="0,10" Click="Draw2Button_Click">Draw</Button>
+                    </StackPanel>
+
+                    <Canvas x:Name="MyCanvas2" Grid.Column="1" Margin="10">
+
+                    </Canvas>
+                </Grid>
             </TabItem>
             <TabItem Header="Punkt 3">
                 <Grid Background="#FFE5E5E5"/>
