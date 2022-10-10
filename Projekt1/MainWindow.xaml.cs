@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Text;
@@ -11,10 +14,13 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Projekt1
 {
@@ -387,7 +393,7 @@ namespace Projekt1
                     Canvas.SetTop(selectedElipse, Point2.Y);
                 }
                 if (selectedLine != null)
-                { 
+                {
                     double minX = Math.Min(selectedLine.X1, selectedLine.X2);
                     double minY = Math.Min(selectedLine.Y1, selectedLine.Y2);
                     double maxX = Math.Max(selectedLine.X1, selectedLine.X2);
@@ -653,6 +659,9 @@ namespace Projekt1
             {
                 if (e.OriginalSource is Rectangle)
                 {
+                    WidthText6.Text = "";
+                    HeightText6.Text = "";
+
                     selectedRectangle = (Rectangle)e.OriginalSource;
                     selectedElipse = new();
                     selectedLine = new();
@@ -662,6 +671,11 @@ namespace Projekt1
                 }
                 else if (e.OriginalSource is Line)
                 {
+                    XStart6.Text = "";
+                    XEnd6.Text = "";
+                    YStart6.Text = "";
+                    YEnd6.Text = "";
+
                     selectedLine = (Line)e.OriginalSource;
                     selectedRectangle = new();
                     selectedElipse = new();
@@ -674,6 +688,8 @@ namespace Projekt1
                 }
                 else if (e.OriginalSource is Ellipse)
                 {
+                    RadiusText6.Text = "";
+
                     selectedElipse = (Ellipse)e.OriginalSource;
                     selectedLine = new();
                     selectedRectangle = new();
@@ -756,11 +772,11 @@ namespace Projekt1
             }
 
         }
-        
+
 
         private void TextChanged6(object sender, TextChangedEventArgs e)
         {
-            if(!TransformButton6.IsEnabled)
+            if (!TransformButton6.IsEnabled)
             {
                 if (selectedRectangle!=null && WidthText6.Text != "" && HeightText6.Text!="")
                 {
@@ -774,7 +790,7 @@ namespace Projekt1
                     selectedElipse.Height = Convert.ToDouble(RadiusText6.Text);
                 }
 
-                if(selectedLine != null && XStart6.Text != "" && YStart6.Text != "" && XEnd6.Text != "" && YEnd6.Text != "")
+                if (selectedLine != null && XStart6.Text != "" && YStart6.Text != "" && XEnd6.Text != "" && YEnd6.Text != "")
                 {
                     selectedLine.X1 = Convert.ToDouble(XStart6.Text);
                     selectedLine.X2 = Convert.ToDouble(XEnd6.Text);
@@ -785,6 +801,269 @@ namespace Projekt1
 
         }
         #endregion
+
+
+        #region Zadanie 7
+
+        Shape selectedShape;
+        private void LineButtonClicked7(object sender, RoutedEventArgs e)
+        {
+            LineButton7.IsEnabled = false;
+            RectangleButton7.IsEnabled = true;
+            CircleButton7.IsEnabled = true;
+            MoveButton7.IsEnabled = true;
+            SelectButton7.IsEnabled = true;
+
+        }
+
+        private void RectangleButtonClicked7(object sender, RoutedEventArgs e)
+        {
+            LineButton7.IsEnabled = true;
+            RectangleButton7.IsEnabled = false;
+            CircleButton7.IsEnabled = true;
+            MoveButton7.IsEnabled = true;
+            SelectButton7.IsEnabled = true;
+
+        }
+
+        private void CircleButtonClicked7(object sender, RoutedEventArgs e)
+        {
+            LineButton7.IsEnabled = true;
+            RectangleButton7.IsEnabled = true;
+            CircleButton7.IsEnabled = false;
+            MoveButton7.IsEnabled = true;
+            SelectButton7.IsEnabled = true;
+        }
+
+        private void MoveButtonClicked7(object sender, RoutedEventArgs e)
+        {
+            LineButton7.IsEnabled = true;
+            RectangleButton7.IsEnabled = true;
+            CircleButton7.IsEnabled = true;
+            MoveButton7.IsEnabled = false;
+            SelectButton7.IsEnabled = true;
+        }
+
+
+
+        private void SaveButtonClicked7(object sender, RoutedEventArgs e)
+        {
+            LineButton7.IsEnabled = true;
+            RectangleButton7.IsEnabled = true;
+            CircleButton7.IsEnabled = true;
+            MoveButton7.IsEnabled = true;
+
+            SelectButton7.IsEnabled = true;
+
+            SaveFileDialog fileDialog = new()
+            {
+                Filter = "XML File | *.xml"
+            };
+
+            bool? result = fileDialog.ShowDialog();
+
+            if (result is not true)
+                return;
+
+            string fileName = fileDialog.FileName;
+            if (selectedShape!=null)
+            {
+                string xml = XamlWriter.Save(selectedShape);
+
+                using StreamWriter writer = new(fileName, false);
+                writer.Write(xml);
+            }
+
+
+
+        }
+
+        private void LoadButtonClicked7(object sender, RoutedEventArgs e)
+        {
+            LineButton7.IsEnabled = true;
+            RectangleButton7.IsEnabled = true;
+            CircleButton7.IsEnabled = true;
+            MoveButton7.IsEnabled = true;
+
+            OpenFileDialog dialog = new()
+            {
+                Filter = "XML File | *.xml"
+            };
+            ;
+            bool? result = dialog.ShowDialog();
+
+            if (result is not true) return;
+
+            string fileName = dialog.FileName;
+
+            using FileStream fs = File.Open(fileName, FileMode.Open, FileAccess.Read);
+            Object reader = XamlReader.Load(fs);
+
+            MyCanvas7.Children.Add((UIElement)reader);
+        }
+
+        private void SelectButtonClicked7(object sender, RoutedEventArgs e)
+        {
+            LineButton7.IsEnabled = true;
+            RectangleButton7.IsEnabled = true;
+            CircleButton7.IsEnabled = true;
+            MoveButton7.IsEnabled = true;
+            SelectButton7.IsEnabled = false;
+        }
+
+        private void Canva7MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Point2 = e.GetPosition((UIElement)sender);
+
+            if (!LineButton7.IsEnabled)
+            {
+                Line line = new()
+                {
+                    X1 = Point1.X,
+                    Y1 = Point1.Y,
+                    X2 = Point2.X,
+                    Y2 = Point2.Y,
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 2
+                };
+
+
+                MyCanvas7.Children.Add(line);
+
+            }
+            else if (!RectangleButton7.IsEnabled)
+            {
+                Rectangle rect = new()
+                {
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 2
+                };
+
+                double minX = Math.Min(Point1.X, Point2.X);
+                double minY = Math.Min(Point1.Y, Point2.Y);
+                double maxX = Math.Max(Point1.X, Point2.X);
+                double maxY = Math.Max(Point1.Y, Point2.Y);
+
+                Canvas.SetLeft(rect, minX);
+                Canvas.SetTop(rect, minY);
+
+                double height = maxY - minY;
+                double width = maxX - minX;
+
+                rect.Height = Math.Abs(height);
+                rect.Width = Math.Abs(width);
+
+                MyCanvas7.Children.Add(rect);
+
+            }
+            else if (!CircleButton7.IsEnabled)
+            {
+                Ellipse ellipse = new()
+                {
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 2
+                };
+
+                double minX = Math.Min(Point1.X, Point2.X);
+                double minY = Math.Min(Point1.Y, Point2.Y);
+                double maxX = Math.Max(Point1.X, Point2.X);
+                double maxY = Math.Max(Point1.Y, Point2.Y);
+
+                Canvas.SetLeft(ellipse, minX);
+                Canvas.SetTop(ellipse, minY);
+
+
+                double height = maxY - minY;
+                double width = maxX - minX;
+
+                ellipse.Height = Math.Abs(height);
+                ellipse.Width = Math.Abs(width);
+
+                MyCanvas7.Children.Add(ellipse);
+            }
+
+            if (!MoveButton7.IsEnabled)
+            {
+                if (selectedRectangle != null)
+                {
+                    Canvas.SetLeft(selectedRectangle, Point2.X);
+                    Canvas.SetTop(selectedRectangle, Point2.Y);
+                }
+                if (selectedElipse != null)
+                {
+                    Canvas.SetLeft(selectedElipse, Point2.X);
+                    Canvas.SetTop(selectedElipse, Point2.Y);
+                }
+                if (selectedLine != null)
+                {
+                    double minX = Math.Min(selectedLine.X1, selectedLine.X2);
+                    double minY = Math.Min(selectedLine.Y1, selectedLine.Y2);
+                    double maxX = Math.Max(selectedLine.X1, selectedLine.X2);
+                    double maxY = Math.Max(selectedLine.Y1, selectedLine.Y2);
+
+                    double oldX = selectedLine.X1;
+                    double oldY = selectedLine.Y1;
+
+                    selectedLine.X1 = Point2.X;
+                    selectedLine.Y1 = Point2.Y;
+
+                    selectedLine.X2 = selectedLine.X2 + (selectedLine.X1 - oldX);
+                    selectedLine.Y2 = selectedLine.Y2 + (selectedLine.Y1 - oldY);
+
+                }
+            }
+
+        }
+
+        private void Canva7MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Point1 = e.GetPosition((UIElement)sender);
+
+            if (!SelectButton7.IsEnabled)
+            {
+                selectedShape = (Shape)e.OriginalSource;
+            }
+
+            if (!MoveButton7.IsEnabled)
+            {
+                if (e.OriginalSource is Rectangle)
+                {
+                    GetSelectedFigure((Rectangle)e.OriginalSource);
+                    selectedRectangle = (Rectangle)e.OriginalSource;
+                    selectedElipse = new();
+                    selectedLine = new();
+
+                }
+                else if (e.OriginalSource is Line)
+                {
+                    GetSelectedFigure((Line)e.OriginalSource);
+                    selectedLine = (Line)e.OriginalSource;
+                    selectedElipse = new();
+                    selectedRectangle = new();
+                }
+                else if (e.OriginalSource is Ellipse)
+                {
+                    GetSelectedFigure((Ellipse)e.OriginalSource);
+                    selectedElipse = (Ellipse)e.OriginalSource;
+                    selectedRectangle = new();
+                    selectedLine = new();
+                }
+
+            }
+
+        }
+
+        private void GetSelectedFigure(Shape figure)
+        {
+            if(!SelectButton7.IsEnabled)
+            {
+                selectedShape = figure;
+            }
+        }
+
+        #endregion
+
+        
     }
 }
 

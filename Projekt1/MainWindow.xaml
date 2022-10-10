@@ -218,7 +218,27 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Punkt 7">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "20*"></ColumnDefinition>
+                        <ColumnDefinition Width = "80*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Vertical" Margin="20">
+                        <Button x:Name="LineButton7" Margin="0,10" Click="LineButtonClicked7">Line</Button>
+                        <Button x:Name="RectangleButton7" Margin="0,10" Click="RectangleButtonClicked7">Rectangle</Button>
+                        <Button x:Name="CircleButton7" Margin="0,10" Click="CircleButtonClicked7">Circle</Button>
+                        <Button x:Name="MoveButton7" Margin="0,10" Click="MoveButtonClicked7">Move</Button>
+
+                        <Button x:Name="SelectButton7" Margin="0,10" Click="SelectButtonClicked7">Select Figure</Button>
+                        <Button x:Name="SaveButton7" Margin="0,10" Click="SaveButtonClicked7">Save</Button>
+                        <Button x:Name="LoadButton7" Margin="0,10" Click="LoadButtonClicked7">Load</Button>
+
+                    </StackPanel>
+
+                    <Canvas x:Name="MyCanvas7" Grid.Column="1" Margin="10" Background="#FFF3F3F3" MouseDown="Canva7MouseDown" MouseUp="Canva7MouseUp"/>
+
+                </Grid>
             </TabItem>
         </TabControl>
 
